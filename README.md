@@ -4,6 +4,8 @@
 
 Nowadays with the prevalence of smartphone everyone is able to share ideas and comments online. This new era also comes with the rise of social media platforms such as Twitter. As of October 2019, every second, on average, around 6,000 tweets are sent, which corresponds to 500 million tweets per day. This makes it impossible to detect tweets with offensive language with human works. This is the time for us to bring machine learning into the game.
 
+![Alt Text](https://www.niemanlab.org/images/wordle_wordle-300x160.png)
+
 In this article, we will show how we develop a machine learning algorithm that can be used to detect offensive language in multilingual context.
 
 ## Introduction
@@ -53,4 +55,40 @@ The 5 models we choose are:
 - Linear SVC
 We first run our Arabic dataset without any up-sampling or down-sampling method to see both the accuracy and F1 score of our model.
 
+![Alt Text](https://github.com/czj818/TwitterSentimentalAnalysis/blob/main/img/arabic_acc.jpeg)
+
+We can see that from the box plot above, all models seem to achieve a very good accuracy. Our logistic regression model has the highest accuracy, which equals to 0.839. Even the worst model, which is XGboost, also achieves an accuracy of 0.762. However, does this mean we already in a good place now? Since we have an imbalanced data, we also need to check F1 score for these models.
+
+![Alt Text](https://github.com/czj818/TwitterSentimentalAnalysis/blob/main/img/arabic_f1.jpeg)
+
+This time we see that logistics regression model turns into our worst model in terms of F1 score. It only has a F1 score of 0.588. Linear SVC model has the best F1 score, which equals to 0.712, which is ok but we hope we can better improve this number.
+From the analysis in this part, we have several takeaways:
+1. Imbalanced data does cause a trap in accuracy. We can no longer use accuracy as our main metric to compare models.
+2. Different models show different performances so that we might need to choose different models for different languages.
+
+## Step 5 Ensemble Stacking Model
+
+The idea behind ensemble stacking model is relatively easy to understand. Graph below shows a two-level ensemble stacking model. In the first layer we have three different models each generating predictions after fitting on the training set. Instead of directly using the prediction from these model, we introduce a second layer model which take the predictions from first layer as input and produce our final result.
+
+![Alt Text](https://github.com/czj818/TwitterSentimentalAnalysis/blob/main/img/stacking.jpeg)
+
+Stacking is very popular and has won many predictive model competition. Depending on the scenario, some data scientist can even train stacking models with more than 2 layers. Generally speaking, stacking can always bring improvements to the predictive model, sometimes a huge one.
+The reason is that stacking can combine many weak learners together and become a strong learner. One good analogy I can think of is that if the professor asks a yes or no question to an individual student during the lecture, he or she might answer it incorrectly. However, if the professor asks every student writes answer on the paper and check the final votes, normally the class will more likely to answer it correctly because this time the answer is a combination of every student’s wisdom.
+
+## Results and Discussions
+
+## Step 6 Evaluate the results
+
+Since we discussed in the previous section that accuracy can be misleading, we will use F1 score as our main metric to compare models. 
+
+Both up-sampling/down-sampling and stacking bring improvement to our dataset. In all 5-language analysis, we see that a stacking model with up-sampling or down-sampling method yields the best result. If we take a look at our Greek dataset, we can see that stacking method has a big improvement in terms of F1 score compared to only running a single model.
+Also, another benefit of stacking method is that we do not need to worry about which model we should use. We can see in some languages Linear SVC model is our best choice if we only consider a single model. However, in some other languages, random forest also has a strong performance. But if we use stacking method, because it always generate a great result as a combination of many models, we are guaranteed to have a good result.
+
+## Step 7 Conclusion
+
+We see that 4 out of 5 times, our up-sampling stacking model gives us the best result in terms of F1 score and both stacking method and up-sampling/down-sampling method always help.
+Based on what is shown from the model, we have several key takeaways:
+1. When we encounter an imbalanced dataset, we should not use accuracy to evaluate the data.
+2. Up-sampling/down-sampling is a useful tool to fix the potential risk of imbalanced data. However, we should always run both methods to decide which one we want to apply.
+3. Ensemble stacking method have many advantages. First, it can improve the final result because a strong learner is built from several weak learners. Second, we do not need to worry about which model we should use. Stacking method can always give us a great model.
 
