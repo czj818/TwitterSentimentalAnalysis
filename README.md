@@ -55,11 +55,11 @@ The 5 models we choose are:
 - Linear SVC
 We first run our Arabic dataset without any up-sampling or down-sampling method to see both the accuracy and F1 score of our model.
 
-![Alt Text](https://github.com/czj818/TwitterSentimentalAnalysis/blob/main/img/arabic_acc.jpeg)
+![Alt Text](https://github.com/czj818/TwitterSentimentalAnalysis/blob/main/img/arabic_acc.png)
 
 We can see that from the box plot above, all models seem to achieve a very good accuracy. Our logistic regression model has the highest accuracy, which equals to 0.839. Even the worst model, which is XGboost, also achieves an accuracy of 0.762. However, does this mean we already in a good place now? Since we have an imbalanced data, we also need to check F1 score for these models.
 
-![Alt Text](https://github.com/czj818/TwitterSentimentalAnalysis/blob/main/img/arabic_f1.jpeg)
+![Alt Text](https://github.com/czj818/TwitterSentimentalAnalysis/blob/main/img/arabic_f1.png)
 
 This time we see that logistics regression model turns into our worst model in terms of F1 score. It only has a F1 score of 0.588. Linear SVC model has the best F1 score, which equals to 0.712, which is ok but we hope we can better improve this number.
 From the analysis in this part, we have several takeaways:
@@ -70,7 +70,7 @@ From the analysis in this part, we have several takeaways:
 
 The idea behind ensemble stacking model is relatively easy to understand. Graph below shows a two-level ensemble stacking model. In the first layer we have three different models each generating predictions after fitting on the training set. Instead of directly using the prediction from these model, we introduce a second layer model which take the predictions from first layer as input and produce our final result.
 
-![Alt Text](https://github.com/czj818/TwitterSentimentalAnalysis/blob/main/img/stacking.jpeg)
+![Alt Text](https://github.com/czj818/TwitterSentimentalAnalysis/blob/main/img/stacking.png)
 
 Stacking is very popular and has won many predictive model competition. Depending on the scenario, some data scientist can even train stacking models with more than 2 layers. Generally speaking, stacking can always bring improvements to the predictive model, sometimes a huge one.
 The reason is that stacking can combine many weak learners together and become a strong learner. One good analogy I can think of is that if the professor asks a yes or no question to an individual student during the lecture, he or she might answer it incorrectly. However, if the professor asks every student writes answer on the paper and check the final votes, normally the class will more likely to answer it correctly because this time the answer is a combination of every student’s wisdom.
